@@ -5,16 +5,18 @@ import {
   StyleSheet,
   Button,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Alert
 } from 'react-native';
 
 import Card from '../components/Card';
 import Input from '../components/Input';
+import NumberContainer from '../components/NumberContainer';
 import Colors from '../constants/colors';
 
 const StartGameScreen = props => {
-  const initialValue = "";
-  const [enteredValue, setEnteredValue] = useState(initialValue);
+  
+  const [enteredValue, setEnteredValue] = useState("");
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState();
 
@@ -38,12 +40,24 @@ const StartGameScreen = props => {
       return;
     }
     setConfirmed(confirmed => true);
+    console.log('what is confirmed', confirmed);
     setSelectedNumber(selectedNumber => chosenNumber);
-    console.log('NOT WORKING', selectedNumber);
     setEnteredValue(enteredValue => '');
     
     Keyboard.dismiss();
   };
+
+  let confirmedOutput;
+
+  if (confirmed) {
+    confirmedOutput = (
+      <Card style={styles.summaryContainer}>
+        <Text>You selected</Text>
+        <NumberContainer>{selectedNumber}</NumberContainer>
+        <Button title="START GAME" onPress={() => props.onStartGame(selectedNumber)} />
+      </Card>
+    )
+  }
 
   return (
     <TouchableWithoutFeedback
@@ -78,6 +92,7 @@ const StartGameScreen = props => {
             </View>
           </View>
         </Card>
+        {confirmedOutput}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -110,6 +125,10 @@ const styles = StyleSheet.create({
   input: {
     width: 50,
     textAlign: 'center'
+  },
+  summaryContainer: {
+    marginTop: 20,
+    alignItems: 'center'
   }
 });
 
