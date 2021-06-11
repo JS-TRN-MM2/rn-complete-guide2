@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Button, Alert } from 'react-native';
 
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
+import DefaultStyles from '../constants/defaultStyles';
 
 // useRef:  hook that you create an object you can bind to an input to get access to them
 // useRef:  also allows you to assign a value that survives re-renders
@@ -74,12 +75,11 @@ const GameScreen = props => {
 
     return (
         <View style={styles.screen}>
-            <Text>Opponent's Guess</Text>
+            <Text style={DefaultStyles.title}>Opponent's Guess</Text>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonContainer}>
                 <Button title="LOWER" onPress={nextGuessHandler.bind(this, 'lower')} />
                 <Button title="GREATER" onPress={nextGuessHandler.bind(this, 'greater')} />
-
             </Card>
 
         </View>
