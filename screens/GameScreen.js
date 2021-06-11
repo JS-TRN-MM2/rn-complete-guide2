@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, Alert } from 'react-native';
 
 import NumberContainer from '../components/NumberContainer';
@@ -34,8 +34,21 @@ const GameScreen = props => {
         generateRandomBetween(1, 100, props.userChoice));
     // the useState(generate...) will only be used for the initialState when there is no initial state.
 
+    const [rounds, setRounds] = useState(0);
+
     const currentLow = useRef(1);
     const currentHigh = useRef(100);
+
+    // destructure the props
+    const { userChoice, onGameOver} = props;
+
+    useEffect(() => {
+        // this will run after everytime the GameScreen function has been rendered
+        if (currentGuess === userChoice) {
+            onGameOver(rounds);
+        }
+    }, [currentGuess, userChoice, onGameOver])
+    // within array above you add any values (dependencies) that are coming from outside the useEffect function
 
 
 
@@ -56,6 +69,7 @@ const GameScreen = props => {
         }
         const nextNumber = generateRandomBetween(currentLow.current, currentHigh.current, currentGuess);
         setCurrentGuess(nextNumber);
+        setRounds(curRounds => curRounds + 1);
     };
 
     return (
