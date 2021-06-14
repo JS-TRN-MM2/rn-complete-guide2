@@ -14,7 +14,7 @@ const MainButton = props => {
     let ButtonComponent = TouchableOpacity;
 
     // to add ripple affect to android
-    if (Platform.OS === 'android' && Platform.Version >= 21) {
+    if (Platform.Version >= 21) {
         ButtonComponent = TouchableNativeFeedback;
     }
 
@@ -26,9 +26,7 @@ const MainButton = props => {
                 </View>
             </ButtonComponent>
         </View>
-
     );
-
 };
 
 const styles = StyleSheet.create({
